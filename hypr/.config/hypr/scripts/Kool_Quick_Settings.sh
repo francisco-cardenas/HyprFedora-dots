@@ -14,7 +14,7 @@ source "$tmp_config_file"
 configs="$HOME/.config/hypr/configs"
 UserConfigs="$HOME/.config/hypr/UserConfigs"
 rofi_theme="$HOME/.config/rofi/config-edit.rasi"
-msg=' ⁉️ Choose what to do ⁉️'
+#msg=' ⁉️ Choose what to do ⁉️'
 iDIR="$HOME/.config/swaync/images"
 scriptsDir="$HOME/.config/hypr/scripts"
 UserScripts="$HOME/.config/hypr/UserScripts"
@@ -49,7 +49,7 @@ EOF
 
 # Main function to handle menu selection
 main() {
-    choice=$(menu | rofi -i -dmenu -config $rofi_theme -mesg "$msg")
+    choice=$(menu | rofi -i -dmenu -config $rofi_theme)
     
     # Map choices to corresponding files
     case "$choice" in

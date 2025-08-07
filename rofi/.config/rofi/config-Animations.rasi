@@ -17,14 +17,14 @@ window {
 
 /* ---- Entry ---- */ 
 entry {
-  width: 43%;
-  placeholder: " ✨ Search / Choose which Animations to load";
+  width: inherit;
+  placeholder: "  Search / Choose which Animations to load";
 }
 
 /* ---- Listview ---- */
 listview {
   columns: 2;
-  lines: 7;
+  lines: 8;
   fixed-height: false;
   margin: 10px;
   scrollbar: true;
