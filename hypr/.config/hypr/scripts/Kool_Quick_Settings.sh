@@ -44,6 +44,8 @@ Choose Rofi Themes
 Search for Keybinds
 Toggle Game Mode
 Switch Dark-Light Theme
+FIDO2 U2F Security Key Auth
+FIDO2 U2F Security Key LUKS
 EOF
 }
 
@@ -100,6 +102,8 @@ main() {
         "Search for Keybinds") $scriptsDir/KeyBinds.sh ;;
         "Toggle Game Mode") $scriptsDir/GameMode.sh ;;
         "Switch Dark-Light Theme") $scriptsDir/DarkLight.sh ;;
+	"FIDO2 U2F Security Key Auth") $term -e $scriptsDir/FIDO2-U2F_Configuration.sh ;;
+	"FIDO2 U2F Security Key LUKS") $term -e $scriptsDir/FIDO2-U2F_LUKS.sh ;;
         *) return ;;  # Do nothing for invalid choices
     esac
 
