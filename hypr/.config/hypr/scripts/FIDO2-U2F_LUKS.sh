@@ -8,6 +8,13 @@ info() { echo -e "\e[1;34m[INFO]\e[0m $1"; }
 warn() { echo -e "\e[1;33m[WARN]\e[0m $1"; }
 error() { echo -e "\e[1;31m[ERROR]\e[0m $1"; }
 
+confirm_exit(){
+    # Wait for user to acknowledge before closing terminal
+    echo ""
+    read -n 1 -s -r -p "Press any key to exit..."
+    echo
+}
+
 # Show script purpose and ask for confirmation
 echo -e "\e[1;36mThis script will:\e[0m
   - Configure dracut to include fido2 support
@@ -39,6 +46,7 @@ read -rp $'\e[1;36mEnter the full device path of your LUKS-encrypted partition (
 if [[ ! -b "$luks_device" ]]; then
     error "Device $luks_device does not exist or is not a block device."
     exit 1
+    confirm_exit
 fi
 
 # Enroll the YubiKey with the selected LUKS device
@@ -53,6 +61,7 @@ backup="/etc/crypttab.bak"
 if [[ ! -f "$crypttab" ]]; then
     error "$crypttab not found. Manual configuration is required."
     exit 1
+    confirm_exit
 fi
 
 # Count non-commented lines
@@ -61,6 +70,8 @@ entries=$(grep -v '^\s*#' "$crypttab" | grep -c .)
 if [[ "$entries" -ne 1 ]]; then
     warn "Multiple entries in /etc/crypttab. Manual update recommended."
     echo "Example option to append: ,fido2-device=auto"
+    
+    confirm_exit
 else
     # Ensure the last option is 'discard'
     if grep -v '^\s*#' "$crypttab" | grep -qE '\s+[^[:space:]]+\s+[^[:space:]]+\s+[^[:space:]]+\s+.*discard$'; then
@@ -77,6 +88,8 @@ else
     else
         warn "Single entry detected, but it does not end with 'discard'."
         echo "Manual edit recommended. Example: add ',fido2-device=auto' to the options field."
+
+	confirm_exit
     fi
 fi
 

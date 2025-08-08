@@ -3,6 +3,13 @@
 
 set -euo pipefail
 
+confirm_exit(){
+    # Wait for user to acknowledge before closing terminal
+    echo ""
+    read -n 1 -s -r -p "Press any key to exit..."
+    echo
+}
+
 # Display purpose and prompt user to continue
 echo -e "\e[1;36mThis script will:\e[0m
   - Install required packages for YubiKey PAM authentication
@@ -35,6 +42,7 @@ fido_output=$(fido2-token -L 2>/dev/null || true)
 if [[ -z "$fido_output" ]]; then
     error "No FIDO2 device found. Please insert your YubiKey and try again."
     exit 1
+    confirm_exit
 fi
 
 echo "$fido_output"
@@ -43,6 +51,7 @@ device_path=$(echo "$fido_output" | grep -o '/dev/hidraw[0-9]*' | head -n1)
 if [[ -z "$device_path" ]]; then
     error "Failed to extract device path."
     exit 1
+    confirm_exit
 fi
 
 info "Found YubiKey at $device_path"
@@ -84,4 +93,4 @@ else
 fi
 
 info "YubiKey PAM authentication setup complete."
-
+confirm_exit
