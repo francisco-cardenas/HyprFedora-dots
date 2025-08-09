@@ -2,4 +2,9 @@
 hypr/.config/hypr/.initial_startup_done
 
 # git update-index --assume-unchanged rofi/.config/rofi/.current_wallpaper
-
+# git update-index --assume-unchanged rofi/.config/rofi/wallust/colors-rofi.rasi
+# git update-index --assume-unchanged hypr/.config/hypr/wallpaper_effects/.wallpaper_current
+# git update-index --assume-unchanged hypr/.config/hypr/wallust/wallust-hyprland.conf
+# git update-index --assume-unchanged kitty/.config/kitty/kitty-themes/01-Wallust.conf
+# git update-index --assume-unchanged waybar/.config/waybar/wallust/colors-waybar.css
+# git update-index --assume-unchanged cava/.config/cava/config

@@ -65,7 +65,7 @@ if [[ ! -f "$crypttab" ]]; then
 fi
 
 # Count non-commented lines
-entries=$(grep -v '^\s*#' "$crypttab" | grep -c .)
+entries=$(sudo grep -v '^\s*#' "$crypttab" | grep -c .)
 
 if [[ "$entries" -ne 1 ]]; then
     warn "Multiple entries in /etc/crypttab. Manual update recommended."
@@ -74,7 +74,7 @@ if [[ "$entries" -ne 1 ]]; then
     confirm_exit
 else
     # Ensure the last option is 'discard'
-    if grep -v '^\s*#' "$crypttab" | grep -qE '\s+[^[:space:]]+\s+[^[:space:]]+\s+[^[:space:]]+\s+.*discard$'; then
+    if sudo grep -v '^\s*#' "$crypttab" | awk '{print $4}' | sudo grep -qE '(^|,)discard$'; then
         info "Single crypttab entry with 'discard' found. Attempting automatic update..."
 
         # Backup
@@ -87,7 +87,8 @@ else
         info "Updated /etc/crypttab to enable FIDO2 unlocking."
     else
         warn "Single entry detected, but it does not end with 'discard'."
-        echo "Manual edit recommended. Example: add ',fido2-device=auto' to the options field."
+        echo "Manual edit recommended. Example: add ',fido2-device=auto' to the options field. Then run 'dracut -f'"
+	exit 1
 
 	confirm_exit
     fi
